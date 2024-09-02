@@ -13,13 +13,14 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public SalaryInfoDto getCalculateSalary(Integer salaryTwelveMonth, Integer numberVacationDays, LocalDate startDate, LocalDate endDate) throws IncompatibleParametersExсeption {
+        SalaryInfoDto localSalaryInfoDto = new SalaryInfoDto();
         if (verifyThatNumberVacationDaysNotNull(numberVacationDays, startDate, endDate)) {
-
+            localSalaryInfoDto.setAmountSalary(salaryTwelveMonth * numberVacationDays);
+            return localSalaryInfoDto;
         }
         if (verifyThatPeriodNotNull(numberVacationDays, startDate, endDate)) {
 
         }
-
         return null;
     }
 

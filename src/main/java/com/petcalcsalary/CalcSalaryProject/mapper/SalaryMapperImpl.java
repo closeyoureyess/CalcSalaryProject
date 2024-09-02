@@ -2,7 +2,9 @@ package com.petcalcsalary.CalcSalaryProject.mapper;
 
 import com.petcalcsalary.CalcSalaryProject.common.SalaryInfo;
 import com.petcalcsalary.CalcSalaryProject.dtos.SalaryInfoDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SalaryMapperImpl implements SalaryMapper {
     @Override
     public SalaryInfo convertDtoToSalary(SalaryInfoDto salaryInfoDto) {
