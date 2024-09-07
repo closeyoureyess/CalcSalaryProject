@@ -29,7 +29,7 @@ public class SalaryController {
 
     @GetMapping("/calculate/{salaryTwelveMonth}")
     public ResponseEntity<SalaryInfoDto> getCalculateSalary(@PathVariable("salaryTwelveMonth") @NotNull @PositiveOrZero Integer salaryTwelveMonth,
-                                                            @RequestParam(value = "numberVacationDays", required = false) @Min(ConstantsClass.ONE_FLAG) @Max(ConstantsClass.MAX_DURATION_VACATION) Integer numberVacationDays,
+                                                            @RequestParam(value = "numberVacationDays", required = false) @PositiveOrZero @Max(ConstantsClass.MAX_DURATION_VACATION) Integer numberVacationDays,
                                                             @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = ConstantsClass.PATTERN_DATE) LocalDate startDate,
                                                             @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = ConstantsClass.PATTERN_DATE) LocalDate endDate) throws MainSalaryExсeption {
         log.info(ConstantsClass.GET_METHOD + ConstantsClass.IS_CONTROLLER + SalaryController.class.getName() + salaryTwelveMonth + numberVacationDays + startDate + endDate);
