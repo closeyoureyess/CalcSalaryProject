@@ -29,7 +29,9 @@ public class SalaryServiceImpl implements SalaryService {
                             dayOff.getDatesBetween(startDate, endDate)
                     )
             );
-            localSalaryInfoDto.setAmountSalary(salaryTwelveMonth * listWithoutFestiveAndDayOffDays.size());
+            localSalaryInfoDto.setAmountSalary(
+                    computeAverageSalaryPerDay(salaryTwelveMonth) * listWithoutFestiveAndDayOffDays.size()
+            );
         }
         return localSalaryInfoDto;
     }
@@ -52,5 +54,9 @@ public class SalaryServiceImpl implements SalaryService {
                     new IncompatibleParametersExсeption(DescriptionExceptions.RANGE_AND_NUMBER_VACATION_DAYS_IS_NOT_NULL.getTypeEquipmentEnum()));
         }
         return false;
+    }
+
+    private Integer computeAverageSalaryPerDay(Integer salaryTwelveMonth) {
+        return (salaryTwelveMonth / 12) / 30;
     }
 }

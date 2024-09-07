@@ -2,13 +2,9 @@ package com.petcalcsalary.CalcSalaryProject.controller;
 
 import com.petcalcsalary.CalcSalaryProject.dtos.SalaryInfoDto;
 import com.petcalcsalary.CalcSalaryProject.others.ConstantsClass;
-import com.petcalcsalary.CalcSalaryProject.others.exeptions.IncompatibleParametersExсeption;
 import com.petcalcsalary.CalcSalaryProject.others.exeptions.MainSalaryExсeption;
 import com.petcalcsalary.CalcSalaryProject.services.SalaryService;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,9 +25,9 @@ public class SalaryController {
 
     @GetMapping("/calculate/{salaryTwelveMonth}")
     public ResponseEntity<SalaryInfoDto> getCalculateSalary(@PathVariable("salaryTwelveMonth") @NotNull @PositiveOrZero Integer salaryTwelveMonth,
-                                                            @RequestParam(value = "numberVacationDays", required = false) @PositiveOrZero @Max(ConstantsClass.MAX_DURATION_VACATION) Integer numberVacationDays,
-                                                            @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = ConstantsClass.PATTERN_DATE) LocalDate startDate,
-                                                            @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = ConstantsClass.PATTERN_DATE) LocalDate endDate) throws MainSalaryExсeption {
+                                                            @RequestParam(value = "numberVacationDays", required = false) @Positive @Min(1) @Max(28) Integer numberVacationDays,
+                                                            @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
+                                                            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate) throws MainSalaryExсeption {
         log.info(ConstantsClass.GET_METHOD + ConstantsClass.IS_CONTROLLER + SalaryController.class.getName() + salaryTwelveMonth + numberVacationDays + startDate + endDate);
         SalaryInfoDto salaryInfoDto = salaryService.getCalculateSalary(salaryTwelveMonth, numberVacationDays, startDate, endDate);
         if (salaryInfoDto != null) {

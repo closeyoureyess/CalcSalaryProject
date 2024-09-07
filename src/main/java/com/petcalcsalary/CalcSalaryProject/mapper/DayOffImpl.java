@@ -1,6 +1,7 @@
 package com.petcalcsalary.CalcSalaryProject.mapper;
 
 import com.petcalcsalary.CalcSalaryProject.others.ConstantsClass;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -10,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class DayOffImpl implements DayOff {
 
     @Override
@@ -37,11 +39,11 @@ public class DayOffImpl implements DayOff {
     @Override
     public Optional<LocalDate> checkLocalDateIsFestiveDays(LocalDate localDate) {
         for (LocalDate ld : ConstantsClass.DAYOFF_MONTH_DAY) {
-            if (!localDate.equals(ld)) {
-                return Optional.of(localDate);
+            if (localDate.equals(ld)) {
+                return Optional.empty();
             }
         }
-        return Optional.empty();
+        return Optional.of(localDate);
     }
 
     @Override
