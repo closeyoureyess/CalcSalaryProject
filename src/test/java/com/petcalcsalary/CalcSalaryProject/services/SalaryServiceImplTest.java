@@ -11,12 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
@@ -26,10 +28,10 @@ public class SalaryServiceImplTest {
     @Mock
     private DayOffImpl dayOffImpl;
 
-    /*@BeforeEach
+    @BeforeEach
     void setUp() {
         salaryServiceImpl = new SalaryServiceImpl();
-    }*/
+    }
     @Test
     void verifyThatNumberVacationDaysTest() {
         try {
@@ -76,10 +78,16 @@ public class SalaryServiceImplTest {
 
     @Test
     void getCalculateSalaryTest() throws IncompatibleParametersExсeption {
+        LocalDate startDate =  LocalDate.of(2024, 8, 14);
+        LocalDate endDate = LocalDate.of(2024, 9, 14);
+        Mockito.when(dayOffImpl.getDatesBetween(startDate, endDate))
+                .thenReturn(List.of(LocalDate.of(2024, 8, 14), LocalDate.of(2024, 8, 15),
+                        LocalDate.of(2024, 8, 16), LocalDate.of(2024, 8, 17)));
+        Mockito.when(dayOffImpl.getDatesWithoutUsualDayOff())
         Assertions.assertEquals(1656, salaryServiceImpl.getCalculateSalary(25000,
                 null,
-                LocalDate.of(2024, 8, 14),
-                LocalDate.of(2024, 9, 14)).getAmountSalary());
+                startDate,
+                endDate));
         Assertions.assertEquals(1656,
                 salaryServiceImpl.getCalculateSalary(25000, 24, null, null).getAmountSalary());
     }
