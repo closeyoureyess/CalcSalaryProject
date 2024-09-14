@@ -57,8 +57,6 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     private Integer computeAverageSalaryPerDay(Integer salaryTwelveMonth) {
-        int a = (salaryTwelveMonth / 12);
-        int b = a / 30;
-        return b;
+        return (salaryTwelveMonth / 12) / 30;
     }
 }
