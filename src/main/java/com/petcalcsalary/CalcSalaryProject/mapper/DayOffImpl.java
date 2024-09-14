@@ -82,7 +82,6 @@ public class DayOffImpl implements DayOff {
         List<LocalDate> localDates = new LinkedList<>();
         LocalDate localDate = startDate;
         while (!localDate.isAfter(endDate)) {
-            System.out.println(localDate);
             localDates.add(localDate);
             localDate = localDate.plusDays(ConstantsClass.ONE_FLAG);
         }
