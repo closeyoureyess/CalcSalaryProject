@@ -21,7 +21,7 @@ public class SalaryServiceImpl implements SalaryService {
     public SalaryInfoDto getCalculateSalary(Integer salaryTwelveMonth, Integer numberVacationDays, LocalDate startDate, LocalDate endDate) throws IncompatibleParametersExсeption {
         SalaryInfoDto localSalaryInfoDto = new SalaryInfoDto();
         if (verifyThatNumberVacationDaysNotNull(numberVacationDays, startDate, endDate)) {
-            localSalaryInfoDto.setAmountSalary(salaryTwelveMonth * numberVacationDays);
+            localSalaryInfoDto.setAmountSalary(computeAverageSalaryPerDay(salaryTwelveMonth) * numberVacationDays);
         }
         if (verifyThatPeriodNotNull(numberVacationDays, startDate, endDate)) {
             List<LocalDate> listWithoutFestiveAndDayOffDays = dayOff.deleteFromListLocalDateFestiveDays(
@@ -57,6 +57,8 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     private Integer computeAverageSalaryPerDay(Integer salaryTwelveMonth) {
-        return (salaryTwelveMonth / 12) / 30;
+        int a = (salaryTwelveMonth / 12);
+        int b = a / 30;
+        return b;
     }
 }
