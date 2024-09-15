@@ -24,7 +24,7 @@ public class SalaryController {
     private SalaryService salaryService;
 
     @GetMapping("/calculate/{salaryTwelveMonth}")
-    public ResponseEntity<SalaryInfoDto> getCalculateSalary(@PathVariable("salaryTwelveMonth") @NotNull @PositiveOrZero Integer salaryTwelveMonth,
+    public ResponseEntity<SalaryInfoDto> getCalculateSalary(@PathVariable("salaryTwelveMonth") @NotNull @PositiveOrZero @Min(19242) Integer salaryTwelveMonth,
                                                             @RequestParam(value = "numberVacationDays", required = false) @Positive @Min(1) @Max(28) Integer numberVacationDays,
                                                             @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
                                                             @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate) throws MainSalaryExсeption {
