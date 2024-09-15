@@ -2,7 +2,7 @@ package com.petcalcsalary.CalcSalaryProject.controller;
 
 import com.petcalcsalary.CalcSalaryProject.dtos.SalaryInfoDto;
 import com.petcalcsalary.CalcSalaryProject.others.ConstantsClass;
-import com.petcalcsalary.CalcSalaryProject.others.exeptions.MainSalaryExсeption;
+import com.petcalcsalary.CalcSalaryProject.others.exeptions.MainSalaryException;
 import com.petcalcsalary.CalcSalaryProject.services.SalaryService;
 
 import javax.validation.constraints.*;
@@ -46,13 +46,13 @@ public class SalaryController {
      * @param startDate          Дата начала отпуска. Опционально. Формат: yyyy-MM-dd.
      * @param endDate            Дата окончания отпуска. Опционально. Формат: yyyy-MM-dd.
      * @return {@link ResponseEntity} содержащий объект {@link SalaryInfoDto} с расчётной суммой отпускных или статус 400 Bad Request при ошибке.
-     * @throws MainSalaryExсeption Исключение, которое может быть выброшено при расчёте отпускных.
+     * @throws MainSalaryException Исключение, которое может быть выброшено при расчёте отпускных.
      */
     @GetMapping("/calculate/{salaryTwelveMonth}")
     public ResponseEntity<SalaryInfoDto> getCalculateSalary(@PathVariable("salaryTwelveMonth") @NotNull @PositiveOrZero @Min(19242) Integer salaryTwelveMonth,
                                                             @RequestParam(value = "numberVacationDays", required = false) @Positive @Min(1) @Max(28) Integer numberVacationDays,
                                                             @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                                            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) throws MainSalaryExсeption {
+                                                            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) throws MainSalaryException {
         log.info(ConstantsClass.GET_METHOD + ConstantsClass.IS_CONTROLLER + SalaryController.class.getName() + salaryTwelveMonth + numberVacationDays + startDate + endDate);
         SalaryInfoDto salaryInfoDto = salaryService.getCalculateSalary(salaryTwelveMonth, numberVacationDays, startDate, endDate);
         if (salaryInfoDto != null) {

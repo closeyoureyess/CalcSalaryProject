@@ -8,13 +8,10 @@ import java.util.Set;
 
 public class ConstantsClass {
 
-    public static final String PATTERN_DATE = "dd-mm-yyyy";
-
     public static final String GET_METHOD = "Метод GET ";
     public static final String IS_CONTROLLER = "контроллер ";
     public static final Integer THIRTY_FIRST_DAY = Year.now().getValue();
     public static final Integer ONE_FLAG = 1;
-    public static final Integer MAX_DURATION_VACATION = 28;
     public static final Set<LocalDate> DAYOFF_MONTH_DAY = Set.of(LocalDate.of(2024, 1, 1),
             LocalDate.of(2024, 1, 2),
             LocalDate.of(2024, 1, 3),

@@ -2,6 +2,9 @@ package com.petcalcsalary.CalcSalaryProject.others.exeptions;
 
 import lombok.Getter;
 
+/**
+ * ENUM для эксепшенов, предоставляющий шаблоны текста и подробные описания различных кастомных ошибок, причины их возникновения
+ */
 @Getter
 public enum DescriptionExceptions {
 

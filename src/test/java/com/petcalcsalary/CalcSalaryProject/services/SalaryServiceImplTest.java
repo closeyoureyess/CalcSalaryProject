@@ -3,7 +3,7 @@ package com.petcalcsalary.CalcSalaryProject.services;
 import com.petcalcsalary.CalcSalaryProject.others.ConstantsClassTest;
 import com.petcalcsalary.CalcSalaryProject.mapper.DayOff;
 import com.petcalcsalary.CalcSalaryProject.mapper.DayOffImpl;
-import com.petcalcsalary.CalcSalaryProject.others.exeptions.IncompatibleParametersExсeption;
+import com.petcalcsalary.CalcSalaryProject.others.exeptions.IncompatibleParametersException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,11 +37,11 @@ public class SalaryServiceImplTest {
 
             InvocationTargetException invocationTargetExceptionSecond = Assertions.assertThrows(InvocationTargetException.class,
                     () -> method.invoke(salaryServiceImpl, ConstantsClassTest.AMOUNT_SALARY, null, ConstantsClassTest.END_DATE));
-            Assertions.assertInstanceOf(IncompatibleParametersExсeption.class, invocationTargetExceptionSecond.getCause());
+            Assertions.assertInstanceOf(IncompatibleParametersException.class, invocationTargetExceptionSecond.getCause());
 
             InvocationTargetException invocationTargetExceptionThird = Assertions.assertThrows(InvocationTargetException.class,
                     () -> method.invoke(salaryServiceImpl, ConstantsClassTest.AMOUNT_SALARY, ConstantsClassTest.START_DATE, null));
-            Assertions.assertInstanceOf(IncompatibleParametersExсeption.class, invocationTargetExceptionThird.getCause());
+            Assertions.assertInstanceOf(IncompatibleParametersException.class, invocationTargetExceptionThird.getCause());
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             log.error(e.getMessage() + ConstantsClassTest.WHITESPACE + e.getCause());
         }
@@ -57,22 +57,22 @@ public class SalaryServiceImplTest {
                     ConstantsClassTest.END_DATE));
             InvocationTargetException invocationTargetExceptionFirst = Assertions.assertThrows(InvocationTargetException.class,
                     () -> method.invoke(salaryServiceImpl, null, ConstantsClassTest.START_DATE, null));
-            Assertions.assertInstanceOf(IncompatibleParametersExсeption.class, invocationTargetExceptionFirst.getCause());
+            Assertions.assertInstanceOf(IncompatibleParametersException.class, invocationTargetExceptionFirst.getCause());
 
             InvocationTargetException invocationTargetExceptionSecond = Assertions.assertThrows(InvocationTargetException.class,
                     () -> method.invoke(salaryServiceImpl, null, null, ConstantsClassTest.END_DATE));
-            Assertions.assertInstanceOf(IncompatibleParametersExсeption.class, invocationTargetExceptionSecond.getCause());
+            Assertions.assertInstanceOf(IncompatibleParametersException.class, invocationTargetExceptionSecond.getCause());
 
             InvocationTargetException invocationTargetExceptionThird = Assertions.assertThrows(InvocationTargetException.class,
                     () -> method.invoke(salaryServiceImpl, null, null, null));
-            Assertions.assertInstanceOf(IncompatibleParametersExсeption.class, invocationTargetExceptionThird.getCause());
+            Assertions.assertInstanceOf(IncompatibleParametersException.class, invocationTargetExceptionThird.getCause());
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             log.error(e.getMessage() + ConstantsClassTest.WHITESPACE + e.getCause());
         }
     }
 
     @Test
-    void getCalculateSalaryTest() throws IncompatibleParametersExсeption {
+    void getCalculateSalaryTest() throws IncompatibleParametersException {
         DayOffImpl dayOffLocal = new DayOffImpl();
         List<LocalDate> listWithLocalDates = dayOffLocal.getDatesBetween(ConstantsClassTest.START_DATE, ConstantsClassTest.END_DATE);
         Mockito.when(dayOff.getDatesBetween(ConstantsClassTest.START_DATE, ConstantsClassTest.END_DATE)).thenReturn(listWithLocalDates);
