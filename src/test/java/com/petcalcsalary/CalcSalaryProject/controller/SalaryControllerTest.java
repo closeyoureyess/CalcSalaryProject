@@ -4,9 +4,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.petcalcsalary.CalcSalaryProject.ConstantsClassTest;
+import com.petcalcsalary.CalcSalaryProject.others.ConstantsClassTest;
 import com.petcalcsalary.CalcSalaryProject.dtos.SalaryInfoDto;
-import com.petcalcsalary.CalcSalaryProject.others.ConstantsClass;
 import com.petcalcsalary.CalcSalaryProject.services.SalaryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,25 +33,25 @@ public class SalaryControllerTest {
 
     @Test
     void getCalculateSalary() throws Exception {
-        Integer salaryTwelveMonth = 25000;
-        SalaryInfoDto salaryInfoDto = new SalaryInfoDto(1656);
-        Mockito.when(salaryService.getCalculateSalary(salaryTwelveMonth, null, ConstantsClassTest.START_DATE,
+        SalaryInfoDto salaryInfoDto = new SalaryInfoDto(ConstantsClassTest.AMOUNT_VACATION_PAY);
+        Mockito.when(salaryService.getCalculateSalary(ConstantsClassTest.AMOUNT_SALARY, null, ConstantsClassTest.START_DATE,
                 ConstantsClassTest.END_DATE)).thenReturn(salaryInfoDto);
-        mockMvc.perform(get("/api/v1/calculate/{salaryTwelveMonth}", salaryTwelveMonth)
+        mockMvc.perform(get("/api/v1/calculate/{salaryTwelveMonth}", ConstantsClassTest.AMOUNT_SALARY)
                         .param("startDate", "2024-08-14")
                         .param("endDate", "2024-09-14"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.amountSalary").value(salaryInfoDto.getAmountSalary()));
-        Mockito.verify(salaryService, Mockito.times(ConstantsClass.ONE_FLAG)).getCalculateSalary(salaryTwelveMonth, null,
-                ConstantsClassTest.START_DATE, ConstantsClassTest.END_DATE);
+                .andExpect(jsonPath("$.amountVacationPay").value(salaryInfoDto.getAmountVacationPay()));
+        Mockito.verify(salaryService, Mockito.times(ConstantsClassTest.ONE_FLAG)).getCalculateSalary(ConstantsClassTest.AMOUNT_SALARY,
+                null, ConstantsClassTest.START_DATE, ConstantsClassTest.END_DATE);
 
-        Integer numberVacationDays = 21;
-        Mockito.when(salaryService.getCalculateSalary(salaryTwelveMonth, numberVacationDays, null, null)).thenReturn(salaryInfoDto);
-        mockMvc.perform(get("/api/v1/calculate/{salaryTwelveMonth}", salaryTwelveMonth)
+        Integer numberVacationDays = 24;
+        Mockito.when(salaryService.getCalculateSalary(ConstantsClassTest.AMOUNT_SALARY, numberVacationDays,
+                null, null)).thenReturn(salaryInfoDto);
+        mockMvc.perform(get("/api/v1/calculate/{salaryTwelveMonth}", ConstantsClassTest.AMOUNT_SALARY)
                         .param("numberVacationDays", String.valueOf(numberVacationDays)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.amountSalary").value(salaryInfoDto.getAmountSalary()));
-        Mockito.verify(salaryService, Mockito.times(ConstantsClass.ONE_FLAG)).getCalculateSalary(salaryTwelveMonth, numberVacationDays,
+                .andExpect(jsonPath("$.amountVacationPay").value(salaryInfoDto.getAmountVacationPay()));
+        Mockito.verify(salaryService, Mockito.times(ConstantsClassTest.ONE_FLAG)).getCalculateSalary(ConstantsClassTest.AMOUNT_SALARY, numberVacationDays,
                 null, null);
 
     }

@@ -10,6 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 public class SalaryInfo {
 
-    private Integer amountSalary;
+    private Integer amountVacationPay;
 
 }

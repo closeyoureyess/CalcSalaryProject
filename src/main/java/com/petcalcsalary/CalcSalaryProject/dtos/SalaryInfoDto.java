@@ -11,6 +11,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class SalaryInfoDto implements Serializable {
 
-    private Integer amountSalary;
+    private Integer amountVacationPay;
 
 }

@@ -1,7 +1,6 @@
 package com.petcalcsalary.CalcSalaryProject.mapper;
 
-import com.petcalcsalary.CalcSalaryProject.ConstantsClassTest;
-import com.petcalcsalary.CalcSalaryProject.others.ConstantsClass;
+import com.petcalcsalary.CalcSalaryProject.others.ConstantsClassTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +51,7 @@ public class DayOffImpTest {
     @Test
     void compareLocalDateWithUsualDayOffTest(){
         for (int i = 1; i <= 7; i++){
-            if (i == 7 || i == 1) {
+            if (i == 6 || i == 7) {
                 Assertions.assertTrue(dayOff.compareLocalDateWithUsualDayOff(i));
             } else {
                 Assertions.assertFalse(dayOff.compareLocalDateWithUsualDayOff(i));
@@ -78,7 +77,7 @@ public class DayOffImpTest {
         Assertions.assertNotEquals(dateList.size(), dayOff.getDatesWithoutUsualDayOff(dateList).size());
         //
         dateList.clear();
-        dateList.add(ConstantsClassTest.START_DATE.minusDays(ConstantsClass.ONE_FLAG));
+        dateList.add(ConstantsClassTest.START_DATE.minusDays(ConstantsClassTest.ONE_FLAG));
         Assertions.assertEquals(dateList.size(), dayOff.getDatesWithoutUsualDayOff(dateList).size());
     }
 

@@ -9,14 +9,14 @@ public class SalaryMapperImpl implements SalaryMapper {
     @Override
     public SalaryInfo convertDtoToSalary(SalaryInfoDto salaryInfoDto) {
         SalaryInfo salaryInfo = new SalaryInfo();
-        salaryInfo.setAmountSalary(salaryInfoDto.getAmountSalary());
+        salaryInfo.setAmountVacationPay(salaryInfoDto.getAmountVacationPay());
         return salaryInfo;
     }
 
     @Override
     public SalaryInfoDto convertSalaryToDto(SalaryInfo salaryInfo) {
         SalaryInfoDto salaryInfoDto = new SalaryInfoDto();
-        salaryInfoDto.setAmountSalary(salaryInfo.getAmountSalary());
+        salaryInfoDto.setAmountVacationPay(salaryInfo.getAmountVacationPay());
         return salaryInfoDto;
     }
 }

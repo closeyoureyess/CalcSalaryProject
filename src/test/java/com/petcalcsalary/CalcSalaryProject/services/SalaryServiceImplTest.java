@@ -1,9 +1,8 @@
 package com.petcalcsalary.CalcSalaryProject.services;
 
-import com.petcalcsalary.CalcSalaryProject.ConstantsClassTest;
+import com.petcalcsalary.CalcSalaryProject.others.ConstantsClassTest;
 import com.petcalcsalary.CalcSalaryProject.mapper.DayOff;
 import com.petcalcsalary.CalcSalaryProject.mapper.DayOffImpl;
-import com.petcalcsalary.CalcSalaryProject.others.ConstantsClass;
 import com.petcalcsalary.CalcSalaryProject.others.exeptions.IncompatibleParametersExсeption;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +25,6 @@ public class SalaryServiceImplTest {
     private SalaryServiceImpl salaryServiceImpl;
     @Mock
     private DayOff dayOff;
-    private final LocalDate startDate = LocalDate.of(2024, 8, 14);
 
     //Тесты  приватных методов
     @Test
@@ -35,17 +33,17 @@ public class SalaryServiceImplTest {
             Method method = SalaryServiceImpl.class.getDeclaredMethod("verifyThatNumberVacationDaysNotNull", Integer.class, LocalDate.class,
                     LocalDate.class);
             method.setAccessible(true);
-            Assertions.assertTrue((Boolean) method.invoke(salaryServiceImpl, 20000, null, null));
+            Assertions.assertTrue((Boolean) method.invoke(salaryServiceImpl,ConstantsClassTest.AMOUNT_SALARY, null, null));
 
             InvocationTargetException invocationTargetExceptionSecond = Assertions.assertThrows(InvocationTargetException.class,
-                    () -> method.invoke(salaryServiceImpl, 20000, null, ConstantsClassTest.END_DATE));
+                    () -> method.invoke(salaryServiceImpl, ConstantsClassTest.AMOUNT_SALARY, null, ConstantsClassTest.END_DATE));
             Assertions.assertInstanceOf(IncompatibleParametersExсeption.class, invocationTargetExceptionSecond.getCause());
 
             InvocationTargetException invocationTargetExceptionThird = Assertions.assertThrows(InvocationTargetException.class,
-                    () -> method.invoke(salaryServiceImpl, 20000, ConstantsClassTest.START_DATE, null));
+                    () -> method.invoke(salaryServiceImpl, ConstantsClassTest.AMOUNT_SALARY, ConstantsClassTest.START_DATE, null));
             Assertions.assertInstanceOf(IncompatibleParametersExсeption.class, invocationTargetExceptionThird.getCause());
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            log.error(e.getMessage() + ConstantsClass.WHITESPACE + e.getCause());
+            log.error(e.getMessage() + ConstantsClassTest.WHITESPACE + e.getCause());
         }
     }
 
@@ -55,8 +53,8 @@ public class SalaryServiceImplTest {
             Method method = SalaryServiceImpl.class.getDeclaredMethod("verifyThatPeriodNotNull", Integer.class, LocalDate.class,
                     LocalDate.class);
             method.setAccessible(true);
-            Assertions.assertTrue((Boolean) method.invoke(salaryServiceImpl, null, LocalDate.of(2024, 8, 14),
-                    LocalDate.of(2024, 9, 14)));
+            Assertions.assertTrue((Boolean) method.invoke(salaryServiceImpl, null, ConstantsClassTest.START_DATE,
+                    ConstantsClassTest.END_DATE));
             InvocationTargetException invocationTargetExceptionFirst = Assertions.assertThrows(InvocationTargetException.class,
                     () -> method.invoke(salaryServiceImpl, null, ConstantsClassTest.START_DATE, null));
             Assertions.assertInstanceOf(IncompatibleParametersExсeption.class, invocationTargetExceptionFirst.getCause());
@@ -69,7 +67,7 @@ public class SalaryServiceImplTest {
                     () -> method.invoke(salaryServiceImpl, null, null, null));
             Assertions.assertInstanceOf(IncompatibleParametersExсeption.class, invocationTargetExceptionThird.getCause());
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            log.error(e.getMessage() + ConstantsClass.WHITESPACE + e.getCause());
+            log.error(e.getMessage() + ConstantsClassTest.WHITESPACE + e.getCause());
         }
     }
 
@@ -85,10 +83,21 @@ public class SalaryServiceImplTest {
         List<LocalDate> listWithoutFestiveDays = dayOffLocal.deleteFromListLocalDateFestiveDays(listWithoutDayOff);
         Mockito.when(dayOff.deleteFromListLocalDateFestiveDays(listWithoutDayOff)).thenReturn(listWithoutFestiveDays);
 
-        Assertions.assertEquals(1656, salaryServiceImpl.getCalculateSalary(25000, null,
-                        ConstantsClassTest.START_DATE, ConstantsClassTest.END_DATE).getAmountSalary());
-        Assertions.assertEquals(1656,
-                salaryServiceImpl.getCalculateSalary(25000, 24, null, null).getAmountSalary());
+        Assertions.assertEquals(ConstantsClassTest.AMOUNT_VACATION_PAY, salaryServiceImpl.getCalculateSalary(ConstantsClassTest.AMOUNT_SALARY, null,
+                        ConstantsClassTest.START_DATE, ConstantsClassTest.END_DATE).getAmountVacationPay());
+        Assertions.assertEquals(ConstantsClassTest.AMOUNT_VACATION_PAY,
+                salaryServiceImpl.getCalculateSalary(ConstantsClassTest.AMOUNT_SALARY, 23, null, null).getAmountVacationPay());
+    }
+
+    @Test
+    void computeAverageSalaryPerDayTest() {
+        try {
+            Method method = SalaryServiceImpl.class.getDeclaredMethod("computeAverageSalaryPerDay", Integer.class);
+            method.setAccessible(true);
+            Assertions.assertEquals(69, method.invoke(salaryServiceImpl,ConstantsClassTest.AMOUNT_SALARY));
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            log.error(e.getMessage() + ConstantsClassTest.WHITESPACE + e.getCause());
+        }
     }
 
 }

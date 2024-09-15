@@ -28,9 +28,11 @@ public class DayOffImpl implements DayOff {
 
     @Override
     public boolean compareLocalDateWithUsualDayOff(int valueDayOfWeek){
-        if (valueDayOfWeek == Calendar.SATURDAY) {
+        int saturday = 6; // because Calendar.SATURDAY == 7
+        int sunday = 7; // Calendar.SUNDAY == 1
+        if (valueDayOfWeek == saturday) {
             return true;
-        } else if (valueDayOfWeek == Calendar.SUNDAY) {
+        } else if (valueDayOfWeek == sunday) {
             return true;
         }
         return false;
